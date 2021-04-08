@@ -1,5 +1,29 @@
 const express = require('express');
 
+const {
+    addIrrigation,
+    getAllIrrigation,
+    getIrrigation,
+    updateIrrigation,
+    deleteIrrigation
+} = require('../controllers/IrrigationController');
+
+const {
+    addEtatPlante,
+    getAllEtatsPlante,
+    getEtatPlante,
+    updateEtatPlante,
+    deleteEtatPlante
+} = require('../controllers/EtatPlanteController');
+
+
+const {
+    addEtatSerre,
+    getAllEtatsSerre,
+    getEtatSerre,
+    updateEtatSerre,
+    deleteEtatSerre
+} = require('../controllers/EtatSerreController');
 
 const {
     addEnvironnement,
@@ -17,7 +41,29 @@ const {
     deletePlante
 } = require('../controllers/PlanteController');
 
+const {
+    addUser,
+    getAllUsers,
+    getUser,
+    updateUser,
+    deleteUser
+} = require('../controllers/UtilisateurController');
+
 const router = express.Router();
+
+router.post('/user', addUser);
+router.get('/users', getAllUsers);
+router.get('/user/:id', getUser);
+router.put('/user-update/:id', updateUser);
+router.delete('/user-delete/:id', deleteUser);
+
+
+router.post('/etatSerre', addEtatSerre);
+router.get('/etatsSerre', getAllEtatsSerre);
+router.get('/etatSerre/:id', getEtatSerre);
+router.put('/etatSerre-update/:id', updateEtatSerre);
+router.delete('/etatSerre-delete/:id', deleteEtatSerre);
+
 
 
 
