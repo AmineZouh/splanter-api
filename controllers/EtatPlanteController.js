@@ -67,7 +67,7 @@ const updateEtatPlante = async (req, res, next) => {
     }
 }
 
-const deleteEtatPLante = async (req, res, next) => {
+const deleteEtatPlante = async (req, res, next) => {
     try {
         const id = req.params.id;
         await firestore.collection('etatPlantes').doc(id).delete();

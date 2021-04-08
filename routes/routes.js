@@ -10,7 +10,7 @@ const {
 
 const {
     addEtatPlante,
-    getAllEtatsPlante,
+    getAllEtatPlante,
     getEtatPlante,
     updateEtatPlante,
     deleteEtatPlante
@@ -78,6 +78,18 @@ router.get('/environnements', getAllEnvironnements);
 router.get('/environnement/:id', getEnvironnement);
 router.put('/environnement/:id', updateEnvironnement);
 router.delete('/environnement/:id', deleteEnvironnement);
+
+router.post('/irrigation', addIrrigation);
+router.get('/irrigations', getAllIrrigation);
+router.get('/irrigation/:id', getIrrigation);
+router.put('/irrigation/:id', updateIrrigation);
+router.delete('/irrigation/:id', deleteIrrigation);
+
+router.post('/etatPlante', addEtatPlante);
+router.get('/etatPlantes', getAllEtatPlante);
+router.get('/etatPlante/:id', getEtatPlante);
+router.put('/etatPlante/:id', updateEtatPlante);
+router.delete('/etatPlante/:id', deleteEtatPlante);
 
 
 module.exports = {
