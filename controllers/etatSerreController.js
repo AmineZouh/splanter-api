@@ -1,0 +1,87 @@
+'use strict';
+
+const firebase = require('../db');
+const etatSerre = require('../models/etatSerre');
+const firestore = firebase.firestore();
+
+
+const addEtatSerre = async (req, res, next) => {
+    try {
+        const data = req.body;
+        await firestore.collection('etatsSerre').doc().set(data);
+        res.send('Record saved successfuly');
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getAllEtatsSerre = async (req, res, next) => {
+    try {
+        const etatsSerre = await firestore.collection('etatsSerre');
+        const data = await etatSerre.get();
+        const etatsSerreArray = [];
+        if(data.empty) {
+            res.status(404).send('No etatSerre record found');
+        }else {
+            data.forEach(doc => {
+                const etatSerre = new etatSerre(
+                    doc.id,
+                    doc.data().etatLuminosite,
+                    doc.data().etatPorte1,
+                    doc.data().etatPorte2,
+                    doc.data().date,
+                    doc.data().age
+                );
+                etatsSerreArray.push(etatSerre);
+            });
+            res.send(etatsSerreArray);
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getEtatSerre = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const etatSerre = await firestore.collection('etatsSerre').doc(id);
+        const data = await etatSerre.get();
+        if(!data.exists) {
+            res.status(404).send('EtatSerre with the given ID not found');
+        }else {
+            res.send(data.data());
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const updateEtatSerre = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const etatSerre =  await firestore.collection('etatsSerre').doc(id);
+        await etatSerre.update(data);
+        res.send('EtaSerre record updated successfuly');        
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const deleteEtatSerre = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        await firestore.collection('etatsSerre').doc(id).delete();
+        res.send('Record deleted successfuly');
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+module.exports = {
+    addEtatSerre,
+    getAllEtatsSerre,
+    getEtatSerre,
+    updateEtatSerre,
+    deleteEtatSerre
+}
