@@ -26,11 +26,9 @@ const getAllEtatsSerre = async (req, res, next) => {
             data.forEach(doc => {
                 const etatSerre = new etatSerre(
                     doc.id,
-                    doc.data().etatLuminosite,
-                    doc.data().etatPorte1,
-                    doc.data().etatPorte2,
+                    doc.data().humidite,
+                    doc.data().temperature,
                     doc.data().date,
-                    doc.data().age
                 );
                 etatsSerreArray.push(etatSerre);
             });

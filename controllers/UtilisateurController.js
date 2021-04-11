@@ -24,7 +24,7 @@ const getAllUsers = async (req, res, next) => {
             res.status(404).send('No student record found');
         } else {
             data.forEach(doc => {
-                const user = new User(
+                const user = new user(
                     doc.id,
                     doc.data().nom,
                     doc.data().prenom,

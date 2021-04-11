@@ -1,6 +1,14 @@
 const express = require('express');
 
 const {
+    addDateHeure,
+    getAllDateHeure,
+    getDateHeure,
+    updateDateHeure,
+    deleteDateHeure
+} = require('../controllers/Date_heureController');
+
+const {
     addIrrigation,
     getAllIrrigation,
     getIrrigation,
@@ -26,12 +34,12 @@ const {
 } = require('../controllers/EtatSerreController');
 
 const {
-    addEnvironnement,
-    getAllEnvironnements,
-    getEnvironnement,
-    updateEnvironnement,
-    deleteEnvironnement
-} = require('../controllers/EnvironnementController');
+    addSerre,
+    getAllSerres,
+    getSerre,
+    updateSerre,
+    deleteSerre
+} = require('../controllers/SerreController');
 
 const {
     addPlante,
@@ -42,6 +50,14 @@ const {
 } = require('../controllers/PlanteController');
 
 const {
+    addPorte,
+    getAllPortes,
+    getPorte,
+    updatePorte,
+    deletePorte
+} = require('../controllers/PorteController');
+
+const {
     addUser,
     getAllUsers,
     getUser,
@@ -50,6 +66,12 @@ const {
 } = require('../controllers/UtilisateurController');
 
 const router = express.Router();
+
+router.post('/dateHeure', addDateHeure);
+router.get('/dateHeures', getAllDateHeure);
+router.get('/dateHeure/:id', getDateHeure);
+router.put('/dateHeure-update/:id', updateDateHeure);
+router.delete('/dateHeure-delete/:id', deleteDateHeure);
 
 router.post('/user', addUser);
 router.get('/users', getAllUsers);
@@ -73,11 +95,17 @@ router.get('/plante/:id', getPlante);
 router.put('/plante/:id', updatePlante);
 router.delete('/plante/:id', deletePlante);
 
-router.post('/environnement', addEnvironnement);
-router.get('/environnements', getAllEnvironnements);
-router.get('/environnement/:id', getEnvironnement);
-router.put('/environnement/:id', updateEnvironnement);
-router.delete('/environnement/:id', deleteEnvironnement);
+router.post('/porte', addPorte);
+router.get('/portes', getAllPortes);
+router.get('/porte/:id', getPorte);
+router.put('/porte/:id', updatePorte);
+router.delete('/porte/:id', deletePorte);
+
+router.post('/serre', addSerre);
+router.get('/serres', getAllSerres);
+router.get('/serre/:id', getSerre);
+router.put('/serre/:id', updateSerre);
+router.delete('/serre/:id', deleteSerre);
 
 router.post('/irrigation', addIrrigation);
 router.get('/irrigations', getAllIrrigation);

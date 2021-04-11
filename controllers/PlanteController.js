@@ -27,7 +27,9 @@ const getAllPlantes = async (req, res, next) => {
                 const plante = new Plante(
                     doc.id,
                     doc.data().nom,
-                    doc.data().type
+                    doc.data().type,
+                    doc.data().humiditeSolMax,
+                    doc.data().humiditeSolMin,
                 );
                 plantesArray.push(plante);
             });
