@@ -70,21 +70,21 @@ const router = express.Router();
 router.post('/dateHeure', addDateHeure);
 router.get('/dateHeures', getAllDateHeure);
 router.get('/dateHeure/:id', getDateHeure);
-router.put('/dateHeure-update/:id', updateDateHeure);
-router.delete('/dateHeure-delete/:id', deleteDateHeure);
+router.put('/dateHeure/:id', updateDateHeure);
+router.delete('/dateHeure/:id', deleteDateHeure);
 
 router.post('/user', addUser);
 router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
-router.put('/user-update/:id', updateUser);
-router.delete('/user-delete/:id', deleteUser);
+router.put('/user/:id', updateUser);
+router.delete('/user/:id', deleteUser);
 
 
 router.post('/etatSerre', addEtatSerre);
 router.get('/etatsSerre', getAllEtatsSerre);
 router.get('/etatSerre/:id', getEtatSerre);
-router.put('/etatSerre-update/:id', updateEtatSerre);
-router.delete('/etatSerre-delete/:id', deleteEtatSerre);
+router.put('/etatSerre/:id', updateEtatSerre);
+router.delete('/etatSerre/:id', deleteEtatSerre);
 
 
 
