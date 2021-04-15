@@ -72,7 +72,7 @@ const updateSerre = async (req, res, next) => {
 const deleteSerre = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await firestore.collection('environnements').doc(id).delete();
+        await firestore.collection('serres').doc(id).delete();
         res.send('Record deleted successfuly');
     } catch (error) {
         res.status(400).send(error.message);

@@ -18,7 +18,7 @@ const addEtatSerre = async (req, res, next) => {
 const getAllEtatsSerre = async (req, res, next) => {
     try {
         const etatsSerre = await firestore.collection('etatsSerre');
-        const data = await etatSerre.get();
+        const data = await etatsSerre.get();
         const etatsSerreArray = [];
         if(data.empty) {
             res.status(404).send('No etatSerre record found');

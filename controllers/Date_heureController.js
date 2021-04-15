@@ -43,7 +43,7 @@ const getDateHeure = async (req, res, next) => {
         const dateHeure = await firestore.collection('date_heures').doc(id);
         const data = await dateHeure.get();
         if (!data.exists) {
-            res.status(404).send('EtatPlante with the given ID not found');
+            res.status(404).send('DateHeure with the given ID not found');
         } else {
             res.send(data.data());
         }

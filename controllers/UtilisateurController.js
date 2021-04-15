@@ -8,7 +8,7 @@ const firestore = firebase.firestore();
 const addUser = async (req, res, next) => {
     try {
         const data = req.body;
-        await firestore.collection('user').doc().set(data);
+        await firestore.collection('users').doc().set(data);
         res.send('Record saved successfuly');
     } catch (error) {
         res.status(400).send(error.message);
@@ -17,11 +17,11 @@ const addUser = async (req, res, next) => {
 
 const getAllUsers = async (req, res, next) => {
     try {
-        const users = await firestore.collection('user');
+        const users = await firestore.collection('users');
         const data = await users.get();
         const usersArray = [];
         if (data.empty) {
-            res.status(404).send('No student record found');
+            res.status(404).send('No user record found');
         } else {
             data.forEach(doc => {
                 const user = new user(
@@ -46,7 +46,7 @@ const getUser = async (req, res, next) => {
         const user = await firestore.collection('users').doc(id);
         const data = await user.get();
         if (!data.exists) {
-            res.status(404).send('Student with the given ID not found');
+            res.status(404).send('user with the given ID not found');
         } else {
             res.send(data.data());
         }
@@ -59,9 +59,9 @@ const updateUser = async (req, res, next) => {
     try {
         const id = req.params.id;
         const data = req.body;
-        const user = await firestore.collection('user').doc(id);
+        const user = await firestore.collection('users').doc(id);
         await user.update(data);
-        res.send('Student record updated successfuly');
+        res.send('user record updated successfuly');
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -70,7 +70,7 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
     try {
         const id = req.params.id;
-        await firestore.collection('user').doc(id).delete();
+        await firestore.collection('users').doc(id).delete();
         res.send('Record deleted successfuly');
     } catch (error) {
         res.status(400).send(error.message);
