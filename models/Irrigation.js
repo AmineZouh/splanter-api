@@ -1,8 +1,7 @@
 class Irrigation {
-    constructor(id, duree, date) {
+    constructor(id, debit) {
         this.id = id;
-        this.duree = duree;
-        this.date = date;
+        this.debit = debit;
     }
 }
 

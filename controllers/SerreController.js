@@ -18,7 +18,7 @@ const addSerre = async (req, res, next) => {
 const getAllSerres = async (req, res, next) => {
     try {
         const serres = await firestore.collection('serres');
-        const data = await environnements.get();
+        const data = await serres.get();
         const serresArray = [];
         if (data.empty) {
             res.status(404).send('No serre record found');
@@ -31,7 +31,38 @@ const getAllSerres = async (req, res, next) => {
                     doc.data().temperatureMax,
                     doc.data().temperatureMin,
                     doc.data().humiditeMax,
-                    doc.data().humiditeMin
+                    doc.data().humiditeMin,
+                    doc.data().user_id
+                );
+                serresArray.push(serre);
+            });
+            res.send(serresArray);
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+
+const getSerresByUser = async (req, res, next) => {
+    try {
+        const user_id = req.params.user_id;
+        const serres = await firestore.collection('serres').where("user_id", "==", user_id);
+        const data = await serres.get();
+        const serresArray = [];
+        if (data.empty) {
+            res.status(404).send('No serre record found');
+        } else {
+            data.forEach(doc => {
+                const serre = new Serre(
+                    doc.id,
+                    doc.data().Nom,
+                    doc.data().Luminosite,
+                    doc.data().temperatureMax,
+                    doc.data().temperatureMin,
+                    doc.data().humiditeMax,
+                    doc.data().humiditeMin,
+                    doc.data().user_id
                 );
                 serresArray.push(serre);
             });
@@ -84,5 +115,6 @@ module.exports = {
     getAllSerres,
     getSerre,
     updateSerre,
-    deleteSerre
+    deleteSerre,
+    getSerresByUser
 }
