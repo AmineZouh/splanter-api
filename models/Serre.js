@@ -1,6 +1,7 @@
 class Serre {
-    constructor(id, nom, luminosite, temperatureMax, temperatureMin, humiditeMax, humiditeMin, user_id) {
+    constructor(id, nom, luminosite, temperatureMax, temperatureMin, humiditeMax, humiditeMin, idUser) {
         this.id = id;
+        this.idUser = idUser;
         this.nom = nom;
         this.luminosite = luminosite;
         this.temperatureMax = temperatureMax;

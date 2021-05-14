@@ -5,6 +5,10 @@ const Date_heure = require('../models/Date_heure');
 const firestore = firebase.firestore();
 
 
+const hello = async (req, res) => {
+    res.send('hello world');
+}
+
 const addDateHeure = async (req, res, next) => {
     try {
         const data = req.body;
@@ -79,5 +83,6 @@ module.exports = {
     getAllDateHeure,
     getDateHeure,
     updateDateHeure,
-    deleteDateHeure
+    deleteDateHeure,
+    hello
 }

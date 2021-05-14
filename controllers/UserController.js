@@ -18,14 +18,14 @@ const addUser = async (req, res, next) => {
 const addSerres = async (req, res, next) => {
     try{
         const serres = req.body;
-        const idUser = plantes[0].idSerre;
-        const user = await firestore.collection('serres').doc(iduser);
+        const idUser = serres[0].idSerre;
+        const user = await firestore.collection('users').doc(idUser);
         const data = await user.get();
         if (!data.exists) {
             res.status(404).send('user with the given ID not found');
         } else {
             serres.forEach(serre=>{
-                data.data().serres.push(serre);
+                data.data().serres.push(serre.id);
             })
         }
         await user.update(data.data());
@@ -109,7 +109,7 @@ const getSerresByUser = async (req, res, next) => {
         const serres = data.data().serres;
         const tab_serres = [];
         serres.forEach(async idSerre => {
-            const serre = await firestore.collection('serres').doc(idUser);
+            const serre = await firestore.collection('serres').doc(idSerre);
             const data = serre.get();
             tab_serres.push(data.data());
         });

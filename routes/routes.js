@@ -1,6 +1,7 @@
 const express = require('express');
 
 const {
+    hello,
     addDateHeure,
     getAllDateHeure,
     getDateHeure,
@@ -73,6 +74,7 @@ const {
 
 const router = express.Router();
 
+router.get('/', hello)
 router.post('/dateHeure', addDateHeure);
 router.get('/dateHeures', getAllDateHeure);
 router.get('/dateHeure/:id', getDateHeure);
