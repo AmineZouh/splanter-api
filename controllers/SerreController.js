@@ -18,7 +18,7 @@ const addSerre = async (req, res, next) => {
 const getAllSerres = async (req, res, next) => {
     try {
         const serres = await firestore.collection('serres');
-        const data = await environnements.get();
+        const data = await serres.get();
         const serresArray = [];
         if (data.empty) {
             res.status(404).send('No serre record found');
@@ -85,5 +85,6 @@ module.exports = {
     getAllSerres,
     getSerre,
     updateSerre,
-    deleteSerre
+    deleteSerre,
+    getSerresByUser
 }

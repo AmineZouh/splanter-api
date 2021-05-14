@@ -38,7 +38,8 @@ const {
     getAllSerres,
     getSerre,
     updateSerre,
-    deleteSerre
+    deleteSerre,
+    getSerresByUser
 } = require('../controllers/SerreController');
 
 const {
@@ -63,7 +64,7 @@ const {
     getUser,
     updateUser,
     deleteUser
-} = require('../controllers/UtilisateurController');
+} = require('../controllers/UserController');
 
 const router = express.Router();
 
@@ -104,6 +105,7 @@ router.delete('/porte/:id', deletePorte);
 router.post('/serre', addSerre);
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
+router.get('/serres/:user_id', getSerresByUser);
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
 

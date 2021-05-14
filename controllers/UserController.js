@@ -1,7 +1,7 @@
 'use strict';
 
 const firebase = require('../db');
-const User = require('../models/Utilisateur');
+const User = require('../models/User');
 const firestore = firebase.firestore();
 
 
@@ -24,14 +24,14 @@ const getAllUsers = async (req, res, next) => {
             res.status(404).send('No user record found');
         } else {
             data.forEach(doc => {
-                const user = new user(
+                const user = new User(
                     doc.id,
                     doc.data().nom,
                     doc.data().prenom,
                     doc.data().email,
                     doc.data().mot_de_passe
                 );
-                usersArray.push(user);
+                usersArray.push(User);
             });
             res.send(usersArray);
         }

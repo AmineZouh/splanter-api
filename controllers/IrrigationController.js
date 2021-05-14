@@ -26,8 +26,7 @@ const getAllIrrigation = async (req, res, next) => {
             data.forEach(doc => {
                 const irrigation = new Irrigation(
                     doc.id,
-                    doc.data().duree,
-                    doc.data().date
+                    doc.data().debit
                 );
                 irrigationsArray.push(irrigation);
             });
