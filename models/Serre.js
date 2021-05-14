@@ -7,6 +7,7 @@ class Serre {
         this.temperatureMin = temperatureMin;
         this.humiditeMax = humiditeMax;
         this.humiditeMin = humiditeMin;
+        this.plantes = [];
     }
 }
 

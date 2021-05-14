@@ -31,7 +31,8 @@ const getAllSerres = async (req, res, next) => {
                     doc.data().temperatureMax,
                     doc.data().temperatureMin,
                     doc.data().humiditeMax,
-                    doc.data().humiditeMin
+                    doc.data().humiditeMin,
+                    doc.data().plantes
                 );
                 serresArray.push(serre);
             });
