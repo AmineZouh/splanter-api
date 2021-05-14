@@ -5,6 +5,7 @@ class User {
         this.prenom = prenom;
         this.email = email;
         this.mot_de_passe = mot_de_passe;
+        this.serres = [];
     }
 }
 

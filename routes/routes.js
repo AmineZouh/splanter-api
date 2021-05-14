@@ -39,7 +39,8 @@ const {
     getSerre,
     updateSerre,
     deleteSerre,
-    getSerresByUser
+    getPlantesBySerre,
+    addPlantes
 } = require('../controllers/SerreController');
 
 const {
@@ -47,7 +48,8 @@ const {
     getAllPlantes,
     getPlante,
     updatePlante,
-    deletePlante
+    deletePlante,
+    getSerreByPlante
 } = require('../controllers/PlanteController');
 
 const {
@@ -55,15 +57,18 @@ const {
     getAllPortes,
     getPorte,
     updatePorte,
-    deletePorte
+    deletePorte,
+    getSerreByPorte
 } = require('../controllers/PorteController');
 
 const {
     addUser,
+    addSerres,
     getAllUsers,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getSerresByUser
 } = require('../controllers/UserController');
 
 const router = express.Router();
@@ -75,11 +80,12 @@ router.put('/dateHeure/:id', updateDateHeure);
 router.delete('/dateHeure/:id', deleteDateHeure);
 
 router.post('/user', addUser);
+router.post('/user/serres/add', addSerres)
 router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
-
+router.get('/user/:idUser/serres', getSerresByUser)
 
 router.post('/etatSerre', addEtatSerre);
 router.get('/etatsSerre', getAllEtatsSerre);
@@ -95,17 +101,20 @@ router.get('/plantes', getAllPlantes);
 router.get('/plante/:id', getPlante);
 router.put('/plante/:id', updatePlante);
 router.delete('/plante/:id', deletePlante);
+router.get('/plante/:idPlante/serre', getSerreByPlante);
 
 router.post('/porte', addPorte);
 router.get('/portes', getAllPortes);
 router.get('/porte/:id', getPorte);
 router.put('/porte/:id', updatePorte);
 router.delete('/porte/:id', deletePorte);
+router.get('/plante/:idPlante/serre', getSerreByPorte);
 
 router.post('/serre', addSerre);
+router.post('/serre/plantes/add', addPlantes);
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
-router.get('/serres/:user_id', getSerresByUser);
+router.get('/serres/:idSerre', getPlantesBySerre);
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
 

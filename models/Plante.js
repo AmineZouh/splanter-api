@@ -1,12 +1,12 @@
 class Plante {
 
-    constructor(id, nom, type, humiditeSolMax, humiditeSolMin) {
+    constructor(id, nom, type, humiditeSolMax, humiditeSolMin, idSerre) {
         this.id = id;
         this.nom = nom;
         this.type = type;
         this.humiditeSolMax= humiditeSolMax;
         this.humiditeSolMin= humiditeSolMin;
-        this.id_serre = id_serre;
+        this.idSerre = idSerre;
     }
 }
 

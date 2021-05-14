@@ -1,7 +1,7 @@
 'use strict';
 
 const firebase = require('../db');
-const etatSerre = require('../models/etatSerre');
+const etatSerre = require('../models/EtatSerre');
 const firestore = firebase.firestore();
 
 
