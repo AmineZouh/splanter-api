@@ -41,7 +41,6 @@ const {
     updateSerre,
     deleteSerre,
     getPlantesBySerre,
-    addPlantes,
     getUserBySerre
 } = require('../controllers/SerreController');
 
@@ -65,7 +64,6 @@ const {
 
 const {
     addUser,
-    addSerres,
     getAllUsers,
     getUser,
     updateUser,
@@ -83,7 +81,6 @@ router.put('/dateHeure/:id', updateDateHeure);
 router.delete('/dateHeure/:id', deleteDateHeure);
 
 router.post('/user', addUser);
-router.post('/user/serres/add', addSerres)      //test encore
 router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
 router.put('/user/:id', updateUser);
@@ -114,7 +111,6 @@ router.delete('/porte/:id', deletePorte);
 router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
 
 router.post('/serre', addSerre);
-router.post('/serre/plantes/add', addPlantes);      //test encore
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
 router.get('/serres/:idSerre/plantes', getPlantesBySerre);      //test encore     

@@ -8,7 +8,37 @@ const firestore = firebase.firestore();
 const addPlante = async (req, res, next) => {
     try {
         const data = req.body;
-        await firestore.collection('plantes').doc().set(data);
+        const idSerre = data['idSerre'];
+        const documentRef = firestore.collection("plantes").doc();
+        const planteId = documentRef.id;
+        const plante = {
+            id: planteId,
+            nom : data.nom,
+            type : data.type,
+            humiditeSolMax : data.humiditeSolMax,
+            humiditeSolMin : data.humiditeSolMin,
+            idSerre : data.idSerre
+        };
+        await firestore.collection("plantes").doc(planteId).set(JSON.parse(JSON.stringify(plante)));
+        const serre = await firestore.collection('serres').doc(idSerre);
+        var dataSerre = await serre.get();
+        if (!dataSerre.exists) {
+            res.status(404).send('Serre with the given ID not found');
+        } else {
+            var tabPlantes = dataSerre.data().plantes;
+            tabPlantes.push(planteId);
+            const nserre = {
+                id: dataSerre.data().id,
+                nom: dataSerre.data().nom,
+                luminosite: dataSerre.data().luminosite,
+                temperatureMax: dataSerre.data().temperatureMax,
+                temperatureMin: dataSerre.data().temperatureMin,
+                humiditeMax: dataSerre.data().humiditeMax,
+                humiditeMin: dataSerre.data().humiditeMin,
+                plantes: tabPlantes
+            }
+            await serre.update(JSON.parse(JSON.stringify(nserre)));
+        }
         res.send('Record saved successfuly');
     } catch (error) {
         res.status(400).send(error.message);

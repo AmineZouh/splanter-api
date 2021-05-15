@@ -8,34 +8,44 @@ const firestore = firebase.firestore();
 const addSerre = async (req, res, next) => {
     try {
         const data = req.body;
-        await firestore.collection('serres').doc().set(data);
+        const idUser = data['idUser'];
+        const documentRef = firestore.collection("serres").doc();
+        const serreId = documentRef.id;
+        const serre = {
+            id: serreId,
+            idUser : data.idUser,
+            nom : data.nom,
+            luminosite : data.luminosite,
+            temperatureMax : data.temperatureMax,
+            temperatureMin : data.temperatureMin,
+            humiditeMax : data.humiditeMax,
+            humiditeMin : data.humiditeMin,
+            plantes : data.plantes
+        };
+        await firestore.collection("serres").doc(serreId).set(JSON.parse(JSON.stringify(serre)));
+        const user = await firestore.collection('users').doc(idUser);
+        var dataUser = await user.get();
+        if (!dataUser.exists) {
+            res.status(404).send('user with the given ID not found');
+        } else {
+            var tabSerre = dataUser.data().serres;
+            tabSerre.push(serreId);
+            const nuser = {
+                id: dataUser.data().id,
+                nom: dataUser.data().nom,
+                prenom: dataUser.data().prenom,
+                email: dataUser.data().email,
+                mot_de_passe: dataUser.data().mot_de_passe,
+                serres: tabSerre
+            }
+            await user.update(JSON.parse(JSON.stringify(nuser)));
+        }
         res.send('Record saved successfuly');
     } catch (error) {
         res.status(400).send(error.message);
     }
 }
 
-const addPlantes = async (req, res, next) => {
-    try{
-        const plantes = req.body;
-        const idSerre = plantes[0].idSerre;
-        const serre = await firestore.collection('serres').doc(idSerre);
-        const data = await serre.get();
-        if (!data.exists) {
-            res.status(404).send('Serre with the given ID not found');
-        } else {
-            plantes.forEach(plante=>{
-                data.data().plantes.push(plante);
-            })
-        }
-        await serre.update(data.data());
-        res.send('Records added successfuly');
-    }
-    catch(e){
-        res.status(400).send(e.message)
-    }
-
-}
 
 const getAllSerres = async (req, res, next) => {
     try {
@@ -154,7 +164,6 @@ const getUserBySerre = async (req, res, next) => {
 
 module.exports = {
     addSerre,
-    addPlantes,
     getAllSerres,
     getSerre,
     updateSerre,

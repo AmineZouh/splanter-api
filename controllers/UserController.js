@@ -15,26 +15,7 @@ const addUser = async (req, res, next) => {
     }
 }
 
-const addSerres = async (req, res, next) => {
-    try{
-        const serres = req.body;
-        const idUser = serres[0].idSerre;
-        const user = await firestore.collection('users').doc(idUser);
-        const data = await user.get();
-        if (!data.exists) {
-            res.status(404).send('user with the given ID not found');
-        } else {
-            serres.forEach(serre=>{
-                data.data().serres.push(serre.id);
-            })
-        }
-        await user.update(data.data());
-        res.send('Records addded successfuly');
-    }
-    catch(e){
-        res.status(400).send(e.message)
-    }
-}
+
 
 const getAllUsers = async (req, res, next) => {
     try {
@@ -55,6 +36,7 @@ const getAllUsers = async (req, res, next) => {
                 );
                 usersArray.push(user);
             });
+            console.log(usersArray);
             res.send(usersArray);
         }
     } catch (error) {
@@ -99,6 +81,7 @@ const deleteUser = async (req, res, next) => {
     }
 }
 
+
 const getSerresByUser = async (req, res, next) => {
     const idUser = req.params.idUser;
     const user = await firestore.collection('users').doc(idUser);
@@ -107,21 +90,25 @@ const getSerresByUser = async (req, res, next) => {
         res.send("User with the given id  does not existe");
     }
     else{
-        console.log(data.data());
         const serres = data.data()['serres'];
         const tab_serres = [];
+        var index = 0;
         serres.forEach(async idSerre => {
+            index ++;
             const serre = await firestore.collection('serres').doc(idSerre);
-            const data = serre.get();
-            tab_serres.push(data.data());
+            const dataSerre = await serre.get();
+            tab_serres.push(dataSerre.data());
+            if(index==serres.length){
+                res.send(tab_serres);
+            }
         });
-        res.send(tab_serres);
     }
 }
 
+
+
 module.exports = {
     addUser,
-    addSerres,
     getAllUsers,
     getUser,
     updateUser,
