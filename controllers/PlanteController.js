@@ -30,6 +30,7 @@ const getAllPlantes = async (req, res, next) => {
                     doc.data().type,
                     doc.data().humiditeSolMax,
                     doc.data().humiditeSolMin,
+                    doc.data().idSerre
                 );
                 plantesArray.push(plante);
             });
@@ -78,20 +79,20 @@ const deletePlante = async (req, res, next) => {
 }
 
 const getSerreByPlante = async (req, res, next) =>{
-    const idPlante = req.params.id;
     try {
+        const idPlante = req.params.idPlante;
         const plante = await firestore.collection('plantes').doc(idPlante);
         const data = await plante.get();
         if (!data.exists) {
             res.status(404).send('Plante with the given ID not found');
         } else {
-            const idSerre = data.data().idSerre;
+            const idSerre = data.data()['idSerre'];
             const serre = await firestore.collection('serres').doc(idSerre);
-            const data = await serre.get();
-            if (!data.exists) {
+            const dataSerre = await serre.get();
+            if (!dataSerre.exists) {
                 res.status(404).send('Serre with the given ID not found');
             } else {
-                res.send(data.data());
+                res.send(dataSerre.data());
             }
         }
     } catch (error) {

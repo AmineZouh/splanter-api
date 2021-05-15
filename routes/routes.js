@@ -41,7 +41,8 @@ const {
     updateSerre,
     deleteSerre,
     getPlantesBySerre,
-    addPlantes
+    addPlantes,
+    getUserBySerre
 } = require('../controllers/SerreController');
 
 const {
@@ -82,12 +83,12 @@ router.put('/dateHeure/:id', updateDateHeure);
 router.delete('/dateHeure/:id', deleteDateHeure);
 
 router.post('/user', addUser);
-router.post('/user/serres/add', addSerres)
+router.post('/user/serres/add', addSerres)      //test encore
 router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
-router.get('/user/:idUser/serres', getSerresByUser)
+router.get('/user/:idUser/serres', getSerresByUser)     //test encore
 
 router.post('/etatSerre', addEtatSerre);
 router.get('/etatsSerre', getAllEtatsSerre);
@@ -103,22 +104,23 @@ router.get('/plantes', getAllPlantes);
 router.get('/plante/:id', getPlante);
 router.put('/plante/:id', updatePlante);
 router.delete('/plante/:id', deletePlante);
-router.get('/plante/:idPlante/serre', getSerreByPlante);
+router.get('/plante/:idPlante/serre', getSerreByPlante);    //teste réussi
 
 router.post('/porte', addPorte);
 router.get('/portes', getAllPortes);
 router.get('/porte/:id', getPorte);
 router.put('/porte/:id', updatePorte);
 router.delete('/porte/:id', deletePorte);
-router.get('/plante/:idPlante/serre', getSerreByPorte);
+router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
 
 router.post('/serre', addSerre);
-router.post('/serre/plantes/add', addPlantes);
+router.post('/serre/plantes/add', addPlantes);      //test encore
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
-router.get('/serres/:idSerre', getPlantesBySerre);
+router.get('/serres/:idSerre/plantes', getPlantesBySerre);      //test encore     
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
+router.get('/serre/:idSerre/user', getUserBySerre);     //test réussi
 
 router.post('/irrigation', addIrrigation);
 router.get('/irrigations', getAllIrrigation);

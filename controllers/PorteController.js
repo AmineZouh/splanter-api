@@ -75,8 +75,8 @@ const deletePorte = async (req, res, next) => {
 }
 
 const getSerreByPorte = async (req, res, next) =>{
-    const idPorte = req.params.id;
     try {
+        const idPorte = req.params.idPorte;
         const porte = await firestore.collection('portes').doc(idPorte);
         const data = await porte.get();
         if (!data.exists) {
@@ -84,11 +84,11 @@ const getSerreByPorte = async (req, res, next) =>{
         } else {
             const idSerre = data.data().idSerre;
             const serre = await firestore.collection('serres').doc(idSerre);
-            const data = await serre.get();
-            if (!data.exists) {
+            const dataSerre = await serre.get();
+            if (!dataSerre.exists) {
                 res.status(404).send('Serre with the given ID not found');
             } else {
-                res.send(data.data());
+                res.send(dataSerre.data());
             }
         }
     } catch (error) {

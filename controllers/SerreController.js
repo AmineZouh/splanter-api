@@ -48,13 +48,13 @@ const getAllSerres = async (req, res, next) => {
             data.forEach(doc => {
                 const serre = new Serre(
                     doc.id,
-                    doc.data().Nom,
-                    doc.data().Luminosite,
+                    doc.data().nom,
+                    doc.data().luminosite,
                     doc.data().temperatureMax,
                     doc.data().temperatureMin,
                     doc.data().humiditeMax,
                     doc.data().humiditeMin,
-                    doc.data().plantes
+                    doc.data().idUser
                 );
                 serresArray.push(serre);
             });
@@ -104,9 +104,10 @@ const deleteSerre = async (req, res, next) => {
 
 const getPlantesBySerre = async (req, res, next) => {
     try{
-        const idSerre = req.params.id;
+        const idSerre = req.params.idSerre;
         const serre = await firestore.collection('serres').doc(idSerre);
         const data = await serre.get();
+        console.log(data.data());
         if (!data.exists) {
             res.status(404).send('Serre with the given ID not found');
         }
@@ -126,6 +127,31 @@ const getPlantesBySerre = async (req, res, next) => {
     }
 }
 
+const getUserBySerre = async (req, res, next) => {
+    try{
+        const idSerre = req.params.idSerre;
+        const serre = await firestore.collection('serres').doc(idSerre);
+        const data = await serre.get();
+        if(!data.exists){
+            res.status(404).send('Serre with that id does not existe');
+        }
+        else{
+            const idUser = data.data().idUser;
+            const user = await firestore.collection('users').doc(idUser);
+            const dataUser = await user.get();
+            if(!dataUser.exists){
+                res.status(404).send('User with that id does not existe');
+            }
+            else{
+                res.send(dataUser.data());
+            }
+        }
+    }
+    catch(e){
+        res.status(400).send(e.message)
+    }
+}
+
 module.exports = {
     addSerre,
     addPlantes,
@@ -133,5 +159,6 @@ module.exports = {
     getSerre,
     updateSerre,
     deleteSerre,
-    getPlantesBySerre
+    getPlantesBySerre,
+    getUserBySerre
 }

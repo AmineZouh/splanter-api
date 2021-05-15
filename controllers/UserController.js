@@ -50,9 +50,10 @@ const getAllUsers = async (req, res, next) => {
                     doc.data().nom,
                     doc.data().prenom,
                     doc.data().email,
-                    doc.data().mot_de_passe
+                    doc.data().mot_de_passe,
+                    doc.data().serres
                 );
-                usersArray.push(User);
+                usersArray.push(user);
             });
             res.send(usersArray);
         }
@@ -99,14 +100,15 @@ const deleteUser = async (req, res, next) => {
 }
 
 const getSerresByUser = async (req, res, next) => {
-    const iduser = req.params.id;
+    const idUser = req.params.idUser;
     const user = await firestore.collection('users').doc(idUser);
-    const data  = user.get();
-    if(!data){
+    const data  = await user.get();
+    if(!data.exists){
         res.send("User with the given id  does not existe");
     }
     else{
-        const serres = data.data().serres;
+        console.log(data.data());
+        const serres = data.data()['serres'];
         const tab_serres = [];
         serres.forEach(async idSerre => {
             const serre = await firestore.collection('serres').doc(idSerre);
