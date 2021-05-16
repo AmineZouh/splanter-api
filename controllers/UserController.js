@@ -91,15 +91,15 @@ const getSerresByUser = async (req, res, next) => {
     }
     else{
         const serres = data.data()['serres'];
-        const tab_serres = [];
+        var tab_serres = new Array(serres.length);
         var index = 0;
         serres.forEach(async idSerre => {
-            index ++;
             const serre = await firestore.collection('serres').doc(idSerre);
             const dataSerre = await serre.get();
-            tab_serres.push(dataSerre.data());
-            if(index==serres.length){
-                res.send(tab_serres);
+            tab_serres[index] = dataSerre.data();
+            index ++;
+            if(index == serres.length){
+                res.status(200).send(tab_serres);
             }
         });
     }

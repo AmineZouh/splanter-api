@@ -123,13 +123,17 @@ const getPlantesBySerre = async (req, res, next) => {
         }
         else {
             const plantes = data.data().plantes;
-            const tab_plantes = [];
+            var tab_plantes = new Array(plantes.length);
+            var index = 0;
             plantes.forEach(async idPlante => {
                 const plante = await firestore.collection('plantes').doc(idPlante);
-                const data = plante.get();
-                tab_plantes.push(data.data())
+                const dataPlante = await plante.get();
+                tab_plantes[index] = dataPlante.data();
+                index ++;
+                if(index == plantes.length){
+                    res.status(200).send(tab_plantes)
+                }
             });
-            res.send(tab_plantes);
         }
     }
     catch(e){

@@ -85,7 +85,7 @@ router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
-router.get('/user/:idUser/serres', getSerresByUser)     //test encore
+router.get('/user/:idUser/serres', getSerresByUser)     //test réussi
 
 router.post('/etatSerre', addEtatSerre);
 router.get('/etatsSerre', getAllEtatsSerre);
@@ -96,7 +96,7 @@ router.delete('/etatSerre/:id', deleteEtatSerre);
 
 
 
-router.post('/plante', addPlante);
+router.post('/plante', addPlante);      // modifiée et ça marche, test réussi
 router.get('/plantes', getAllPlantes);
 router.get('/plante/:id', getPlante);
 router.put('/plante/:id', updatePlante);
@@ -110,10 +110,10 @@ router.put('/porte/:id', updatePorte);
 router.delete('/porte/:id', deletePorte);
 router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
 
-router.post('/serre', addSerre);
+router.post('/serre', addSerre);        // moodifiée et ça marche, test réussi
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
-router.get('/serres/:idSerre/plantes', getPlantesBySerre);      //test encore     
+router.get('/serre/:idSerre/plantes', getPlantesBySerre);      //test réussi     
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
 router.get('/serre/:idSerre/user', getUserBySerre);     //test réussi
