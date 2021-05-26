@@ -27,6 +27,8 @@ const getAllEtatPlante = async (req, res, next) => {
                 const etatPlante = new EtatPlante(
                     doc.id,
                     doc.data().humiditeSol,
+                    doc.data().idPlante,
+                    doc.data().date
                 );
                 etatPlantesArray.push(etatPlante);
             });

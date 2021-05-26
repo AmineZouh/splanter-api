@@ -29,6 +29,7 @@ const getAllEtatsSerre = async (req, res, next) => {
                     doc.data().humidite,
                     doc.data().temperature,
                     doc.data().date,
+                    doc.data().idSerre
                 );
                 etatsSerreArray.push(etatSerre);
             });

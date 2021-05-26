@@ -1,8 +1,7 @@
 class Porte {
-    constructor(id, isOpen, idSerre) {
+    constructor(id, isOpen) {
         this.id = id;
-        this.idSerre = idSerre;
-        this.isOpen;
+        this.isOpen = isOpen;
     }
 }
 

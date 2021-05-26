@@ -1,8 +1,9 @@
 class EtatPlante {
-    constructor(id, temperature, humidite, humiditeSol, date, idPlante) {
+    constructor(id, humiditeSol, idPlante, date) {
         this.id = id;
         this.humiditeSol = humiditeSol;
         this.idPlante = idPlante;
+        this.date = date;
     }
 }
 

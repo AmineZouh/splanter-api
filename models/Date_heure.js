@@ -1,10 +1,11 @@
 class Date_heure{
-    constructor(id, date, idPlante, idEtatPlante, idIrrigation){
+    constructor(id, date, idPlante, irrigation, etatPlante){
         this.id= id;
         this.date= date;
+        this.etatPlante = etatPlante;
         this.idPlante = idPlante;
-        this.idEtatPlante = idEtatPlante;
-        this.idIrrigation = idIrrigation;
+        this.idSerre = idSerre;
+        this.irrigation = irrigation;
     }
 }
 

@@ -4,7 +4,6 @@ const firebase = require('../db');
 const Date_heure = require('../models/Date_heure');
 const firestore = firebase.firestore();
 
-
 const hello = async (req, res) => {
     res.send('hello world');
 }
@@ -31,6 +30,10 @@ const getAllDateHeure = async (req, res, next) => {
                 const dateHeure = new Date_heure(
                     doc.id,
                     doc.data().date,
+                    doc.data().etatPlante,
+                    doc.data().idPlante,
+                    doc.data().idSerre,
+                    doc.data().irrigation
                 );
                 date_heuresArray.push(dateHeure);
             });
