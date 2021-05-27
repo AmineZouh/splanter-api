@@ -41,7 +41,7 @@ const {
     updateSerre,
     deleteSerre,
     getPlantesBySerre,
-    getUserBySerre
+    getPortesBySerre
 } = require('../controllers/SerreController');
 
 const {
@@ -110,13 +110,13 @@ router.put('/porte/:id', updatePorte);
 router.delete('/porte/:id', deletePorte);
 router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
 
-router.post('/serre', addSerre);        // moodifiée et ça marche, test réussi
+router.post('/serre', addSerre);        // modifiée et ça marche, test réussi
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
-router.get('/serre/:idSerre/plantes', getPlantesBySerre);      //test réussi     
+router.get('/serre/:idSerre/plantes', getPlantesBySerre);       
+router.get('/serre/:idSerre/plantes', getPortesBySerre);           
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
-router.get('/serre/:idSerre/user', getUserBySerre);     //test réussi
 
 router.post('/irrigation', addIrrigation);
 router.get('/irrigations', getAllIrrigation);

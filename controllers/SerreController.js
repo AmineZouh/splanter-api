@@ -78,13 +78,17 @@ const getAllSerres = async (req, res, next) => {
             data.forEach(doc => {
                 const serre = new Serre(
                     doc.id,
+                    doc.data().idUser,
                     doc.data().nom,
                     doc.data().luminosite,
                     doc.data().temperatureMax,
                     doc.data().temperatureMin,
                     doc.data().humiditeMax,
                     doc.data().humiditeMin,
-                    doc.data().idUser
+                    doc.data().plantes,
+                    doc.data().portes,
+                    doc.data().description,
+                    doc.data().photoUrl
                 );
                 serresArray.push(serre);
             });
@@ -132,35 +136,43 @@ const deleteSerre = async (req, res, next) => {
     }
 }
 
-// const getPlantesBySerre = async (req, res, next) => {
-//     try{
-//         const idSerre = req.params.idSerre;
-//         const serre = await firestore.collection('serres').doc(idSerre);
-//         const data = await serre.get();
-//         console.log(data.data());
-//         if (!data.exists) {
-//             res.status(404).send('Serre with the given ID not found');
-//         }
-//         else {
-//             const plantes = data.data().plantes;
-//             var tab_plantes = new Array(plantes.length);
-//             var index = 0;
-//             plantes.forEach(async idPlante => {
-//                 const plante = await firestore.collection('plantes').doc(idPlante);
-//                 const dataPlante = await plante.get();
-//                 tab_plantes[index] = dataPlante.data();
-//                 index ++;
-//                 if(index == plantes.length){
-//                     res.status(200).send(tab_plantes)
-//                 }
-//             });
-//         }
-//     }
-//     catch(e){
-//         res.status(400).send(e.message)
-//     }
-// }
+const getPlantesBySerre = async (req, res, next) => {
+    try{
+        const idSerre = req.params.idSerre;
+        const serre = await firestore.collection('serres').doc(idSerre);
+        const data = await serre.get();
+        console.log(data.data());
+        if (!data.exists) {
+            res.status(404).send('Serre with the given ID not found');
+        }
+        else {
+            const plantes = data.data().plantes;
+            res.status(200).send(plantes)
+        }
+    }
+    catch(e){
+        res.status(400).send(e.message)
+    }
+}
 
+const getPortesBySerre = async (req, res, next) => {
+    try{
+        const idSerre = req.params.idSerre;
+        const serre = await firestore.collection('serres').doc(idSerre);
+        const data = await serre.get();
+        console.log(data.data());
+        if (!data.exists) {
+            res.status(404).send('Serre with the given ID not found');
+        }
+        else {
+            const portes = data.data().portes;
+            res.status(200).send(portes)
+        }
+    }
+    catch(e){
+        res.status(400).send(e.message)
+    }
+}
 // const getUserBySerre = async (req, res, next) => {
 //     try{
 //         const idSerre = req.params.idSerre;
@@ -192,6 +204,7 @@ module.exports = {
     getSerre,
     updateSerre,
     deleteSerre,
-    // getPlantesBySerre,
+    getPlantesBySerre,
+    getPortesBySerre,
     // getUserBySerre
 }

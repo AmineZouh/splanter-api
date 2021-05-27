@@ -31,7 +31,8 @@ const getAllUsers = async (req, res, next) => {
                     doc.data().nom,
                     doc.data().prenom,
                     doc.data().email,
-                    doc.data().mot_de_passe
+                    doc.data().mot_de_passe,
+                    doc.data().photoUrl
                 );
                 usersArray.push(user);
             });
@@ -81,62 +82,68 @@ const deleteUser = async (req, res, next) => {
 }
 
 
-// const getSerresByUser = async (req, res, next) => {
-//     const idUser = req.params.idUser;
-//     const serresRef = await firestore.collection('serres');
-//     const querySerres = await serres.where('idUser', '==', idUser).get();
-//     if(querySerres.empty){
-//         res.status(404).res('That user that not have any serre');
-//         return;
-//     }
-//     var serres = [];
-//     querySerres.forEach(serreDoc =>{
-//         const serreId = serreDoc.id;
-//         const serreIdUser = serreDoc.data().userId;
-//         const serreNom = serreDoc.data().nom;
-//         const serreLuminosite = serreDoc.data().luminosite;
-//         const serreTemperatureMax = serredoc.data().TemperatureMax;
-//         const serreTemperatureMin = serredoc.data().Temperaturemin;
-//         const serreHumiditeMax = serredoc.data().HumiditeMax;
-//         const serreHumiditeMin = serredoc.data().HumiditeMin;
-//         const serrePlantes = serreDoc.data().plantes;
-//         const serrePortes = serreDoc.data().portes;
-//         const serre = {
-//             serreId,
-//             serreIdUser,
-//             serreNom,
-//             serreLuminosite,
-//             serreTemperatureMax,
-//             serreTemperatureMin,
-//             serreHumiditeMax,
-//             serreHumiditeMin,
-//             serrePlantes,
-//             serrePortes
-//         }
-//         serres.push(serre);
-//     })
-//     res.send(serres);
-//     // const user = await firestore.collection('users').doc(idUser);
-//     // const data  = await user.get();
-//     // if(!data.exists){
-//     //     res.send("User with the given id  does not existe");
-//     // }
-//     // else{
-//     //     // const serres = data.data()['serres'];
-//     //     // var tab_serres = new Array(serres.length);
-//     //     // var index = 0;
-//     //     // serres.forEach(async idSerre => {
-//     //     //     const serre = await firestore.collection('serres').doc(idSerre);
-//     //     //     const dataSerre = await serre.get();
-//     //     //     tab_serres[index] = dataSerre.data();
-//     //     //     index ++;
-//     //     //     if(index == serres.length){
-//     //     //         res.status(200).send(tab_serres);
-//     //     //     }
-//     //     // });
+const getSerresByUser = async (req, res, next) => {
+    try{
+        const idUser = req.params.idUser;
+        const serresRef = await firestore.collection('serres');
+        const querySerres = await serresRef.where('idUser', '==', idUser).get();
+        if(querySerres.empty){
+            res.status(404).send('That user does not have any serre');
+        }
+        var serres = [];
+        querySerres.forEach(serreDoc =>{
+            const serreId = serreDoc.id;
+            const serreIdUser = serreDoc.data().userId;
+            const serreNom = serreDoc.data().nom;
+            const serreLuminosite = serreDoc.data().luminosite;
+            const serreTemperatureMax = serredoc.data().TemperatureMax;
+            const serreTemperatureMin = serredoc.data().Temperaturemin;
+            const serreHumiditeMax = serredoc.data().HumiditeMax;
+            const serreHumiditeMin = serredoc.data().HumiditeMin;
+            const serrePlantes = serreDoc.data().plantes;
+            const serrePortes = serreDoc.data().portes;
+            const serreDescription = serreDoc.data().description;
+            const serrePhotoUrl = serreDoc.data().photoUrl;
+            const serre = {
+                serreId,
+                serreIdUser,
+                serreNom,
+                serreLuminosite,
+                serreTemperatureMax,
+                serreTemperatureMin,
+                serreHumiditeMax,
+                serreHumiditeMin,
+                serrePlantes,
+                serrePortes
+            }
+            serres.push(serre);
+        })
+        res.send(serres);
+    }
+    catch(error){
+        res.status(400).send(error.message);
+    }
+    // const user = await firestore.collection('users').doc(idUser);
+    // const data  = await user.get();
+    // if(!data.exists){
+    //     res.send("User with the given id  does not existe");
+    // }
+    // else{
+    //     // const serres = data.data()['serres'];
+    //     // var tab_serres = new Array(serres.length);
+    //     // var index = 0;
+    //     // serres.forEach(async idSerre => {
+    //     //     const serre = await firestore.collection('serres').doc(idSerre);
+    //     //     const dataSerre = await serre.get();
+    //     //     tab_serres[index] = dataSerre.data();
+    //     //     index ++;
+    //     //     if(index == serres.length){
+    //     //         res.status(200).send(tab_serres);
+    //     //     }
+    //     // });
 
-//     // }
-// }
+    // }
+}
 
 
 
@@ -146,5 +153,5 @@ module.exports = {
     getUser,
     updateUser,
     deleteUser,
-    // getSerresByUser
+    getSerresByUser
 }
