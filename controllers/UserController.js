@@ -96,10 +96,10 @@ const getSerresByUser = async (req, res, next) => {
             const serreIdUser = serreDoc.data().userId;
             const serreNom = serreDoc.data().nom;
             const serreLuminosite = serreDoc.data().luminosite;
-            const serreTemperatureMax = serredoc.data().TemperatureMax;
-            const serreTemperatureMin = serredoc.data().Temperaturemin;
-            const serreHumiditeMax = serredoc.data().HumiditeMax;
-            const serreHumiditeMin = serredoc.data().HumiditeMin;
+            const serreTemperatureMax = serreDoc.data().TemperatureMax;
+            const serreTemperatureMin = serreDoc.data().Temperaturemin;
+            const serreHumiditeMax = serreDoc.data().HumiditeMax;
+            const serreHumiditeMin = serreDoc.data().HumiditeMin;
             const serrePlantes = serreDoc.data().plantes;
             const serrePortes = serreDoc.data().portes;
             const serreDescription = serreDoc.data().description;
@@ -114,7 +114,9 @@ const getSerresByUser = async (req, res, next) => {
                 serreHumiditeMax,
                 serreHumiditeMin,
                 serrePlantes,
-                serrePortes
+                serrePortes,
+                serreDescription,
+                serrePhotoUrl
             }
             serres.push(serre);
         })

@@ -85,7 +85,7 @@ router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
-router.get('/user/:idUser/serres', getSerresByUser)     //test réussi
+router.get('/user/:idUser/serres', getSerresByUser)     //teste réussi    
 
 router.post('/etatSerre', addEtatSerre);
 router.get('/etatsSerre', getAllEtatsSerre);
@@ -96,25 +96,25 @@ router.delete('/etatSerre/:id', deleteEtatSerre);
 
 
 
-router.post('/plante', addPlante);      // modifiée et ça marche, test réussi
-router.get('/plantes', getAllPlantes);
-router.get('/plante/:id', getPlante);
-router.put('/plante/:id', updatePlante);
-router.delete('/plante/:id', deletePlante);
-router.get('/plante/:idPlante/serre', getSerreByPlante);    //teste réussi
+router.post('/plante/:idSerre', addPlante);      //teste réussi
+router.get('/plantes', getAllPlantes);  //à tester
+router.get('/plante/:id/:idSerre', getPlante);   //teste réussi
+router.put('/plante/:id/:idSerre', updatePlante);    //teste réussi
+router.delete('/plante/:id/:idSerre', deletePlante);     //teste réussi
+// router.get('/plante/:idPlante/serre', getSerreByPlante);    //teste réussi
 
-router.post('/porte', addPorte);
-router.get('/portes', getAllPortes);
-router.get('/porte/:id', getPorte);
-router.put('/porte/:id', updatePorte);
-router.delete('/porte/:id', deletePorte);
-router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
+router.post('/porte/:idSerre', addPorte);    //teste réussi
+router.get('/portes', getAllPortes);    //à tester
+router.get('/porte/:id/:idSerre', getPorte);     //teste réussi
+router.put('/porte/:id/:idSerre', updatePorte);      //teste réussi
+router.delete('/porte/:id/:idSerre', deletePorte);       //teste réussi
+// router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
 
-router.post('/serre', addSerre);        // modifiée et ça marche, test réussi
+router.post('/serre', addSerre);        
 router.get('/serres', getAllSerres);
 router.get('/serre/:id', getSerre);
-router.get('/serre/:idSerre/plantes', getPlantesBySerre);       
-router.get('/serre/:idSerre/plantes', getPortesBySerre);           
+router.get('/serre/:idSerre/plantes', getPlantesBySerre);   //teste réussi    
+router.get('/serre/:idSerre/portes', getPortesBySerre);    //teste réussi       
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
 

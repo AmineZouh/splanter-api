@@ -55,42 +55,41 @@ const addPlante = async (req, res, next) => {
             res.status(404).send('Serre with that id does not existe');
         }
         else{
-            const serreId = serreData.id;
-            const serreDescription = serreData.data().description;
-            const serreNom = serreData.data().nom;
-            const serrePhotoUrl = serreData.data().photoUrl;
-            const serreLuminosite = serreData.data().luminosite;
-            const serreTemperatureMax = serreData.data().temperatureMax;
-            const serreTemperatureMin = serreData.data().temperatureMin;
-            const serreHumiditeMax = serreData.data().humiditeMax;
-            const serreHumiditeMin = serreData.data().humiditeMin;
-            const plantes = serreData.data().plantes;
+            const description = serreData.data().description;
+            const nom = serreData.data().nom;
+            const photoUrl = serreData.data().photoUrl;
+            const luminosite = serreData.data().luminosite;
+            const temperatureMax = serreData.data().temperatureMax;
+            const temperatureMin = serreData.data().temperatureMin;
+            const humiditeMax = serreData.data().humiditeMax;
+            const humiditeMin = serreData.data().humiditeMin;
+            var plantes = serreData.data().plantes;
             const portes = serreData.data().portes;
             const plante = new Plante(
-                plantes.lenght+1,
+                plantes.length+1,
                 data.nom,
                 data.type,
+                data.description,
                 data.humiditeSolMax,
-                data.humiditeSolMin,
-                data.description
-            )
+                data.humiditeSolMin
+            );
             plantes.push(plante);
             const nSerre = {
-                serreId,
-                serreDescription,
-                serreNom,
-                serrePhotoUrl,
-                serreLuminosite,
-                serreTemperatureMax,
-                serreTemperatureMin,
-                serreHumiditeMax,
-                serreHumiditeMin,
+                description,
+                nom,
+                photoUrl,
+                luminosite,
+                temperatureMax,
+                temperatureMin,
+                humiditeMax,
+                humiditeMin,
                 plantes,
                 portes
             }
+            await serre.update(JSON.parse(JSON.stringify(nSerre)));
+            res.send('recors saved successfuly');
         }
-        await serre.update(JSON.parse(JSON.stringify(nSerre)));
-        res.send('recors saved successfuly');
+        
     }
     catch(error){
         res.status(400).send(error.message);
@@ -129,22 +128,14 @@ const getAllPlantes = async (req, res, next) => {
 const getPlante = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const serres = await firestore.collection('serres');
-        const data = await serres.get();
-        if(data.empty){
-            res.status(404).send('No serre found');
+        const idSerre = req.params.idSerre;
+        const serre = await firestore.collection('serres').doc(idSerre);
+        const data = await serre.get();
+        if(!data.exists){
+            res.status(404).send('Serre with the given id does not existe');
         }
         else{
-            const lFPlante = null;
-            data.forEach(serre =>{
-                plantes = serre.data().plantes;
-                plantes.forEach(plante =>{
-                    if(plante.id === id){
-                        lFPlante = plante
-                        break;
-                    }
-                })
-            })
+            const lFPlante =  data.data().plantes[id-1];
             if(lFPlante!= null){
                 res.send(lFPlante);
             }
@@ -153,6 +144,7 @@ const getPlante = async (req, res, next) => {
             }
         }
     } catch (error) {
+        if(error != breakException)
         res.status(400).send(error.message);
     }
 }
@@ -160,58 +152,48 @@ const getPlante = async (req, res, next) => {
 const updatePlante = async (req, res, next) => {
     try {
         const id = req.params.id;
+        const idSerre = req.params.idSerre;
         const data = req.body;
-        const serres = await firestore.collection('serres');
-        const serreData = await serres.get();
-        if(data.empty){
-            res.status(404).send('no serre found');
+        const serre = await firestore.collection('serres').doc(idSerre);
+        const serreData = await serre.get();
+        if(!serreData.exists){
+            res.status(404).send('Serre with the given id does not existe');
         }
         else{
-            const lFPlante = null;
-            const lFSerre = null;
-            const lFPlanteIndex = null;
-            data.data().forEach(serre =>{
-                const index = 0;
-                serre.plantes.forEach(plante =>{
-                    if(plante.id === id){
-                        lFSerre = serre;
-                        lFPlante = plante;
-                        break;
-                    }
-                    index +=1;
-                })
-                if(index != serre.plantes.length ){
-                    lFPlanteIndex = index;
-                    break;
-                }
-            })
-            if(lFPlanteIndex != null){
-                var serrePlantes = lFSerre.plantes;
-                delete serrePlantes[lFPlanteIndex];
-                const nPlante = new Plante(
-                    lFPlante.id,
-                    data.nom,
-                    data.type,
-                    data.description,
-                    data.humiditeSolMax,
-                    data.humiditeSolMin
-                )
-                serrePlantes.push(nPlante);
-                const nSerre = new Serre(
-                    lFSerre.nom,
-                    lFSerre.luminosite,
-                    lFSerre.temperatureMax,
-                    lFSerre.temperatureMin,
-                    lFSerre.humiditeMax,
-                    lFSerre.humiditeMin,
-                    lFSerre.idUser,
-                    serrePlantes,
-                    lFSerre.portes,
-                    lFSerre.description,
-                    lFSerre.photoUrl
-                );
-                await lFSerre.update(nSerre);
-            }
+            var plantes = serreData.data().plantes;
+            const nPlante = new Plante(
+                id,
+                data.nom,
+                data.type,
+                data.description,
+                data.humiditeSolMax,
+                data.humiditeSolMin
+            );
+            plantes[id-1] = nPlante;
+            const idUser = serreData.data().idUser;
+            const description = serreData.data().description;
+            const nom = serreData.data().nom;
+            const photoUrl = serreData.data().photoUrl;
+            const luminosite = serreData.data().luminosite;
+            const temperatureMax = serreData.data().temperatureMax;
+            const temperatureMin = serreData.data().temperatureMin;
+            const humiditeMax = serreData.data().humiditeMax;
+            const humiditeMin = serreData.data().humiditeMin;
+            const portes = serreData.data().portes
+            const nSerre = {
+                idUser,
+                description,
+                nom,
+                photoUrl,
+                luminosite,
+                temperatureMax,
+                temperatureMin,
+                humiditeMax,
+                humiditeMin,
+                plantes,
+                portes
+            };
+            await serre.update(JSON.parse(JSON.stringify(nSerre)));
         }
         res.send('Plante record updated successfuly');
     } catch (error) {
@@ -222,49 +204,39 @@ const updatePlante = async (req, res, next) => {
 const deletePlante = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const data = req.body;
-        const serres = await firestore.collection('serres');
-        const serreData = await serres.get();
-        if(data.empty){
-            res.status(404).send('no serre found');
+        const idSerre = req.params.idSerre;
+        const serre = await firestore.collection('serres').doc(idSerre);
+        const serreData = await serre.get();
+        if(!serreData.exists){
+            res.status(404).send('Serre with the given id does not existe');
         }
         else{
-            const lFPlante = null;
-            const lFSerre = null;
-            const lFPlanteIndex = null;
-            data.data().forEach(serre =>{
-                const index = 0;
-                serre.plantes.forEach(plante =>{
-                    if(plante.id === id){
-                        lFSerre = serre;
-                        lFPlante = plante;
-                        break;
-                    }
-                    index +=1;
-                })
-                if(index != serre.plantes.length ){
-                    lFPlanteIndex = index;
-                    break;
-                }
-            })
-            if(lFPlanteIndex != null){
-                var serrePlantes = lFSerre.plantes;
-                delete serrePlantes[lFPlanteIndex];
-                const nSerre = new Serre(
-                    lFSerre.nom,
-                    lFSerre.luminosite,
-                    lFSerre.temperatureMax,
-                    lFSerre.temperatureMin,
-                    lFSerre.humiditeMax,
-                    lFSerre.humiditeMin,
-                    lFSerre.idUser,
-                    serrePlantes,
-                    lFSerre.portes,
-                    lFSerre.description,
-                    lFSerre.photoUrl
-                );
-                await lFSerre.update(nSerre);
-            }
+            var plantes = serreData.data().plantes;
+            delete plantes[id-1];
+            const idUser = serreData.data().idUser;
+            const description = serreData.data().description;
+            const nom = serreData.data().nom;
+            const photoUrl = serreData.data().photoUrl;
+            const luminosite = serreData.data().luminosite;
+            const temperatureMax = serreData.data().temperatureMax;
+            const temperatureMin = serreData.data().temperatureMin;
+            const humiditeMax = serreData.data().humiditeMax;
+            const humiditeMin = serreData.data().humiditeMin;
+            const portes = serreData.data().portes
+            const nSerre = {
+                idUser,
+                description,
+                nom,
+                photoUrl,
+                luminosite,
+                temperatureMax,
+                temperatureMin,
+                humiditeMax,
+                humiditeMin,
+                plantes,
+                portes
+            };
+            await serre.update(JSON.parse(JSON.stringify(nSerre)));
         }
         res.send('Plante record deleted successfuly');
     } catch (error) {
