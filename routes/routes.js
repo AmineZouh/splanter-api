@@ -10,19 +10,19 @@ const {
 } = require('../controllers/Date_heureController');
 
 const {
-    addIrrigation,
-    getAllIrrigation,
-    getIrrigation,
-    updateIrrigation,
-    deleteIrrigation
+    // addIrrigation,
+    // getAllIrrigation,
+    // getIrrigation,
+    // updateIrrigation,
+    // deleteIrrigation
 } = require('../controllers/IrrigationController');
 
 const {
-    addEtatPlante,
-    getAllEtatPlante,
-    getEtatPlante,
-    updateEtatPlante,
-    deleteEtatPlante
+    // addEtatPlante,
+    // getAllEtatPlante,
+    // getEtatPlante,
+    // updateEtatPlante,
+    // deleteEtatPlante
 } = require('../controllers/EtatPlanteController');
 
 
@@ -49,8 +49,7 @@ const {
     getAllPlantes,
     getPlante,
     updatePlante,
-    deletePlante,
-    getSerreByPlante
+    deletePlante
 } = require('../controllers/PlanteController');
 
 const {
@@ -58,8 +57,7 @@ const {
     getAllPortes,
     getPorte,
     updatePorte,
-    deletePorte,
-    getSerreByPorte
+    deletePorte
 } = require('../controllers/PorteController');
 
 const {
@@ -85,7 +83,7 @@ router.get('/users', getAllUsers);
 router.get('/user/:id', getUser);
 router.put('/user/:id', updateUser);
 router.delete('/user/:id', deleteUser);
-router.get('/user/:idUser/serres', getSerresByUser)     //teste réussi    
+router.get('/user/:idUser/serres', getSerresByUser);   //teste réussi    
 
 router.post('/etatSerre', addEtatSerre);
 router.get('/etatsSerre', getAllEtatsSerre);
@@ -101,14 +99,12 @@ router.get('/plantes', getAllPlantes);  //à tester
 router.get('/plante/:id/:idSerre', getPlante);   //teste réussi
 router.put('/plante/:id/:idSerre', updatePlante);    //teste réussi
 router.delete('/plante/:id/:idSerre', deletePlante);     //teste réussi
-// router.get('/plante/:idPlante/serre', getSerreByPlante);    //teste réussi
 
 router.post('/porte/:idSerre', addPorte);    //teste réussi
 router.get('/portes', getAllPortes);    //à tester
 router.get('/porte/:id/:idSerre', getPorte);     //teste réussi
 router.put('/porte/:id/:idSerre', updatePorte);      //teste réussi
 router.delete('/porte/:id/:idSerre', deletePorte);       //teste réussi
-// router.get('/porte/:idPorte/serre', getSerreByPorte);     //teste réussi
 
 router.post('/serre', addSerre);        
 router.get('/serres', getAllSerres);
@@ -118,17 +114,17 @@ router.get('/serre/:idSerre/portes', getPortesBySerre);    //teste réussi
 router.put('/serre/:id', updateSerre);
 router.delete('/serre/:id', deleteSerre);
 
-router.post('/irrigation', addIrrigation);
-router.get('/irrigations', getAllIrrigation);
-router.get('/irrigation/:id', getIrrigation);
-router.put('/irrigation/:id', updateIrrigation);
-router.delete('/irrigation/:id', deleteIrrigation);
+// router.post('/irrigation', addIrrigation);
+// router.get('/irrigations', getAllIrrigation);
+// router.get('/irrigation/:id', getIrrigation);
+// router.put('/irrigation/:id', updateIrrigation);
+// router.delete('/irrigation/:id', deleteIrrigation);
 
-router.post('/etatPlante', addEtatPlante);
-router.get('/etatPlantes', getAllEtatPlante);
-router.get('/etatPlante/:id', getEtatPlante);
-router.put('/etatPlante/:id', updateEtatPlante);
-router.delete('/etatPlante/:id', deleteEtatPlante);
+// router.post('/etatPlante', addEtatPlante);
+// router.get('/etatPlantes', getAllEtatPlante);
+// router.get('/etatPlante/:id', getEtatPlante);
+// router.put('/etatPlante/:id', updateEtatPlante);
+// router.delete('/etatPlante/:id', deleteEtatPlante);
 
 
 module.exports = {

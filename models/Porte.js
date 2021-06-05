@@ -1,7 +1,8 @@
 class Porte {
-    constructor(id, isOpen) {
+    constructor(id, isOpen, libelle) {
         this.id = id;
         this.isOpen = isOpen;
+        this.libelle= libelle;
     }
 }
 

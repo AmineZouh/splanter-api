@@ -4,5 +4,4 @@ class Irrigation {
         this.duree = duree;
     }
 }
-
 module.exports = Irrigation;

@@ -1,5 +1,5 @@
 class EtatPlante {
-    constructor(id, humiditeSol, idPlante, date) {
+    constructor(id, humiditeSol) {
         this.id = id;
         this.humiditeSol = humiditeSol;
     }

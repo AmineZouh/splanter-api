@@ -1,10 +1,10 @@
 class EtatSerre {
-    constructor(id, humidite, temperature, date, idSerre) {
+    constructor(id, humidite, temperature, timestamp, serreID) {
         this.id = id;
         this.humidite = humidite;
         this.temperature = temperature;
-        this.date = date;
-        this.idSerre = idSerre;
+        this.timestamp = timestamp;
+        this.serreID = serreID;
     }
 }
 

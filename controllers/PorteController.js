@@ -9,15 +9,16 @@ const addPorte = async (req, res, next) => {
     try{
         const idSerre = req.params.idSerre;
         const data = req.body;
-        const serre = await firestore.collection('serres').doc(idSerre);
+        const serre = await firestore.collection('serre').doc(idSerre);
         const serreData = await serre.get();
         if(!serreData.exists){
             res.status(404).send('Serre with that id does not existe');
         }
         else{
+            const utilisateurID = serreData.data().utilisateurID;
             const description = serreData.data().description;
             const nom = serreData.data().nom;
-            const photoUrl = serreData.data().photoUrl;
+            const photoURL = serreData.data().photoURL;
             const luminosite = serreData.data().luminosite;
             const temperatureMax = serreData.data().temperatureMax;
             const temperatureMin = serreData.data().temperatureMin;
@@ -31,9 +32,10 @@ const addPorte = async (req, res, next) => {
             );
             portes.push(porte);
             const nSerre = {
+                utilisateurID,
                 description,
                 nom,
-                photoUrl,
+                photoURL,
                 luminosite,
                 temperatureMax,
                 temperatureMin,
@@ -55,20 +57,15 @@ const addPorte = async (req, res, next) => {
 
 const getAllPortes = async (req, res, next) => {
     try {
-        const serres = await firestore.collection('serres');
+        const serres = await firestore.collection('serre');
         const data = await serres.get();
-        const portesArray = [];
+        var portesArray = [];
         if (data.empty) {
             res.status(404).send('No serre record found');
         } else {
             data.forEach(doc => {
-                doc.data().portes.foreach(porte => {
-                    const nPorte = new Porte(
-                        porte.id,
-                        porte.isOpen
-                    );
-                    portesArray.push(nPorte);
-                })
+                const portes = doc.data().portes;
+                portesArray = portesArray.concat(portes);
             });
             res.send(portesArray);
         }
@@ -81,7 +78,7 @@ const getPorte = async (req, res, next) => {
     try {
         const id = req.params.id;
         const idSerre = req.params.idSerre;
-        const serre = await firestore.collection('serres').doc(idSerre);
+        const serre = await firestore.collection('serre').doc(idSerre);
         const data = await serre.get();
         if(!data.exists){
             res.status(404).send('Serre with the given id does not existe');
@@ -105,7 +102,7 @@ const updatePorte = async (req, res, next) => {
         const id = req.params.id;
         const idSerre = req.params.idSerre;
         const data = req.body;
-        const serre = await firestore.collection('serres').doc(idSerre);
+        const serre = await firestore.collection('serre').doc(idSerre);
         const serreData = await serre.get();
         if(!serreData.exists){
             res.status(404).send('Serre with the given id does not existe');
@@ -114,13 +111,14 @@ const updatePorte = async (req, res, next) => {
             var portes = serreData.data().portes;
             const nPorte = new Porte(
                 id,
-                data.isOpen
+                data.isOpen,
+                data.libelle
             );
             portes[id-1] = nPorte;
-            const idUser = serreData.data().idUser;
+            const utilisateurID = serreData.data().utilisateurID;
             const description = serreData.data().description;
             const nom = serreData.data().nom;
-            const photoUrl = serreData.data().photoUrl;
+            const photoRL = serreData.data().photoURL;
             const luminosite = serreData.data().luminosite;
             const temperatureMax = serreData.data().temperatureMax;
             const temperatureMin = serreData.data().temperatureMin;
@@ -128,10 +126,10 @@ const updatePorte = async (req, res, next) => {
             const humiditeMin = serreData.data().humiditeMin;
             const plantes = serreData.data().plantes
             const nSerre = {
-                idUser,
+                utilisateurID,
                 description,
                 nom,
-                photoUrl,
+                photoURL,
                 luminosite,
                 temperatureMax,
                 temperatureMin,
@@ -152,7 +150,7 @@ const deletePorte = async (req, res, next) => {
     try {
         const id = req.params.id;
         const idSerre = req.params.idSerre;
-        const serre = await firestore.collection('serres').doc(idSerre);
+        const serre = await firestore.collection('serre').doc(idSerre);
         const serreData = await serre.get();
         if(!serreData.exists){
             res.status(404).send('Serre with the given id does not existe');
@@ -160,10 +158,10 @@ const deletePorte = async (req, res, next) => {
         else{
             var portes = serreData.data().portes;
             delete portes[id-1];
-            const idUser = serreData.data().idUser;
+            const utilisateurID = serreData.data().utilisateurID;
             const description = serreData.data().description;
             const nom = serreData.data().nom;
-            const photoUrl = serreData.data().photoUrl;
+            const photoURL = serreData.data().photoURL;
             const luminosite = serreData.data().luminosite;
             const temperatureMax = serreData.data().temperatureMax;
             const temperatureMin = serreData.data().temperatureMin;
@@ -191,34 +189,12 @@ const deletePorte = async (req, res, next) => {
     }
 }
 
-// const getSerreByPorte = async (req, res, next) =>{
-//     try {
-//         const idPorte = req.params.idPorte;
-//         const porte = await firestore.collection('portes').doc(idPorte);
-//         const data = await porte.get();
-//         if (!data.exists) {
-//             res.status(404).send('Porte with the given ID not found');
-//         } else {
-//             const idSerre = data.data().idSerre;
-//             const serre = await firestore.collection('serres').doc(idSerre);
-//             const dataSerre = await serre.get();
-//             if (!dataSerre.exists) {
-//                 res.status(404).send('Serre with the given ID not found');
-//             } else {
-//                 res.send(dataSerre.data());
-//             }
-//         }
-//     } catch (error) {
-//         res.status(400).send(error.message);
-//     }
 
-// }
 
 module.exports = {
     addPorte,
     getAllPortes,
     getPorte,
     updatePorte,
-    deletePorte,
-    // getSerreByPorte
+    deletePorte
 }
