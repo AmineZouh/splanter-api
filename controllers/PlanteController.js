@@ -36,6 +36,7 @@ const addPlante = async (req, res, next) => {
                 data.humiditeSolMin,
                 data.description
             );
+            console.log(plantes);
             plantes.push(plante);
             const nSerre = {
                 utilisateurID,
@@ -180,10 +181,10 @@ const deletePlante = async (req, res, next) => {
             const humiditeMin = serreData.data().humiditeMin;
             const portes = serreData.data().portes
             const nSerre = {
-                idUser,
+                utilisateurID,
                 description,
                 nom,
-                photoUrl,
+                photoURL,
                 luminosite,
                 temperatureMax,
                 temperatureMin,

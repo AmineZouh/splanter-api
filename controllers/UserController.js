@@ -84,8 +84,8 @@ const deleteUser = async (req, res, next) => {
 const getSerresByUser = async (req, res, next) => {
     try{
         const idUser = req.params.idUser;
-        const serresRef = await firestore.collection('serres');
-        const querySerres = await serresRef.where('idUser', '==', idUser).get();
+        const serresRef = await firestore.collection('serre');
+        const querySerres = await serresRef.where('utilisateurID', '==', idUser).get();
         if(querySerres.empty){
             res.status(404).send('That user does not have any serre');
         }

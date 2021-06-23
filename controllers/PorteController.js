@@ -28,7 +28,8 @@ const addPorte = async (req, res, next) => {
             const portes = serreData.data().portes;
             const porte = new Porte(
                 portes.length+1,
-                data.isOpen
+                data.isOpen,
+                data.libelle
             );
             portes.push(porte);
             const nSerre = {
@@ -118,7 +119,7 @@ const updatePorte = async (req, res, next) => {
             const utilisateurID = serreData.data().utilisateurID;
             const description = serreData.data().description;
             const nom = serreData.data().nom;
-            const photoRL = serreData.data().photoURL;
+            const photoURL = serreData.data().photoURL;
             const luminosite = serreData.data().luminosite;
             const temperatureMax = serreData.data().temperatureMax;
             const temperatureMin = serreData.data().temperatureMin;
@@ -169,10 +170,10 @@ const deletePorte = async (req, res, next) => {
             const humiditeMin = serreData.data().humiditeMin;
             const plantes = serreData.data().plantes
             const nSerre = {
-                idUser,
+                utilisateurID,
                 description,
                 nom,
-                photoUrl,
+                photoURL,
                 luminosite,
                 temperatureMax,
                 temperatureMin,

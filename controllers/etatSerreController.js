@@ -24,14 +24,14 @@ const getAllEtatsSerre = async (req, res, next) => {
             res.status(404).send('No etatSerre record found');
         }else {
             data.forEach(doc => {
-                const etatSerre = new etatSerre(
+                const etat_serre = new etatSerre(
                     doc.id,
                     doc.data().humidite,
                     doc.data().temperature,
                     doc.data().timestamp,
                     doc.data().serreID
                 );
-                etatsSerreArray.push(etatSerre);
+                etatsSerreArray.push(etat_serre);
             });
             res.send(etatsSerreArray);
         }
